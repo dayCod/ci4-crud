@@ -11,8 +11,8 @@ News Portal | Register Form
         <figure><img src="https://placeimg.com/400/400/arch" alt="Album" /></figure>
         <div class="card-body mb-5 md:mr-5">
             <h1 class="text-center text-xl mb-3"><span class="text-fuchsia-500">Register</span> Form</h1>
-            <form action="" method="">
-            
+            <form action="/auth/create_account" method="POST">
+            <?= csrf_field() ?>
             <div class="mb-3">
                 <input type="text" placeholder="Username" name="username" class="input input-bordered w-full max-w-xs focus:outline-fuchsia-300" />
             </div>

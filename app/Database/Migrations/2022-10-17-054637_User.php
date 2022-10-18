@@ -36,6 +36,10 @@ class User extends Migration
                 'constraint' => '11'
             ],
 
+            'logged_in' => [
+                'type' => 'BOOLEAN',
+            ],
+
             'created_at' => [
                 'type' => 'DATETIME',
             ],

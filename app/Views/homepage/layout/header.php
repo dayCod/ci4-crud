@@ -6,12 +6,23 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="/auth/login">Login</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/auth/register">Register</a>
-        </li>
+        <?php if (empty(session()->get('email'))) : ?>
+          <li class="nav-item">
+            <a class="nav-link" href="/auth/login">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/auth/register">Register</a>
+          </li>
+        <?php else : ?>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <?= session()->get('email') ?>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="/auth/logout">Logout</a></li>
+            </ul>
+          </li>
+        <?php endif; ?>
       </ul>
     </div>
   </div>
