@@ -45,6 +45,8 @@ $routes->group('auth', static function ($routes) {
 });
 $routes->group('admin', static function($routes) {
     $routes->get('index', 'AdminController::index');
+    $routes->get('create', 'AdminController::create');
+    $routes->post('store', 'AdminController::store');
 });
 
 /*
