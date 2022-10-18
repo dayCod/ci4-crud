@@ -73,14 +73,27 @@ class AuthController extends BaseController
         if(!empty($data)) {
             $verify_password = password_verify($request_data['password'], $data['password']);
             if($verify_password) {
-                $auth_data = [
-                    'username' => $data['email'],
-                    'email' => $data['email'],
-                    'password' => $data['password'],
-                    'logged_in' => 1
-                ];
-                session()->set($auth_data);
-                return redirect()->to(base_url('/'));
+                if($data['role'] == 0) {
+                    $user->where('email', $request_data['email'])->set(['logged_in' => 1])->update();
+                    $auth_data = [
+                        'username' => $data['username'],
+                        'email' => $data['email'],
+                        'password' => $data['password'],
+                        'logged_in' => $data['logged_in']
+                    ];
+                    session()->set($auth_data);
+                    return redirect()->to(base_url('/'));
+                } else {
+                    $user->where('email', $request_data['email'])->set(['logged_in' => 1])->update();
+                    $auth_data = [
+                        'username' => $data['username'],
+                        'email' => $data['email'],
+                        'password' => $data['password'],
+                        'logged_in' => $data['logged_in']
+                    ];
+                    session()->set($auth_data);
+                    return redirect()->to(base_url('/admin/index'));
+                }
             } else {
                 session()->setFlashdata('errors', 'Password Salah!');
                 return redirect()->back();
@@ -93,6 +106,8 @@ class AuthController extends BaseController
 
     public function logout_account()
     {
+        $user = new UserModel();
+        $user->where('email', session()->get('email'))->set(['logged_in' => 0])->update();
         session()->destroy();
         session()->setFlashdata('success', 'Anda Berhasil Logout!');
         return redirect()->to(base_url('/auth/login'));

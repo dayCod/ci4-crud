@@ -43,6 +43,9 @@ $routes->group('auth', static function ($routes) {
     $routes->post('login_account', 'AuthController::login_account', ['as' => 'login_account']);
     $routes->get('logout', 'AuthController::logout_account');
 });
+$routes->group('admin', static function($routes) {
+    $routes->get('index', 'AdminController::index');
+});
 
 /*
  * --------------------------------------------------------------------
