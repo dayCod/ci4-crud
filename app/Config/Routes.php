@@ -47,6 +47,9 @@ $routes->group('admin', static function($routes) {
     $routes->get('index', 'AdminController::index');
     $routes->get('create', 'AdminController::create');
     $routes->post('store', 'AdminController::store');
+    $routes->get('edit/(:num)', 'AdminController::edit/$1');
+    $routes->put('update/(:num)', 'AdminController::update/$1');
+    $routes->delete('destroy/(:num)', 'AdminController::destroy/$1');
 });
 
 /*

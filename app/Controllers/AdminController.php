@@ -35,18 +35,37 @@ class AdminController extends BaseController
         return redirect()->to(base_url('/admin/index')); 
     }
 
-    public function edit()
+    public function edit($id)
     {
-        # code...
+        $news_model = new NewsModel();
+        $edit = $news_model->where('id', $id)->first();
+        return view('admin/edit', ['edit' => $edit]);
     }
 
-    public function update()
+    public function update($id)
     {
-        # code...
+        $validation = [
+            'body' => [
+                'rules' => 'required|min_length[50]',
+                'errors' => 'Karakter Tidak Boleh Kurang dari 50'
+            ]
+        ];
+        if($this->validate($validation)) {
+            $news_model = new NewsModel();
+            $update = $news_model->where('id', $id)->set([
+                'author' => $this->request->getVar('author'),
+                'body' => $this->request->getVar('body'),
+            ])->update();
+            return $update ? redirect()->to(base_url('/admin/index'))->with('success', 'Data Berhasil Dirubah') : redirect()->back()->with('errors', 'Data Gagal Dirubah');
+        }
+        session()->setFlashdata('errors', 'Karakter Tidak Boleh Kurang dari 50');
+        return redirect()->back();
     }
 
-    public function delete()
+    public function destroy($id)
     {
-        # code...
+        $news_model = New NewsModel();
+        $delete = $news_model->where('id', $id)->delete();
+        return $delete ? redirect()->to('/admin/index')->with('success', 'Data Berhasil Dihapus') : redirect()->back()->with('errors', 'Terdapat Kesalahan Dalam Sistem');
     }
 }

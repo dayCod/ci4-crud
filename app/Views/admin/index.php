@@ -35,8 +35,11 @@ News Portal | Admin
                             <td><?= mb_strimwidth($v['body'], 0, 50, '...') ?></td>
                             <td>
                                 <div class="d-flex gap-2 justify-content-center">
-                                    <a href="" class="btn btn-primary btn-sm">Edit</a>
-                                    <button class="btn btn-outline-primary btn-sm">Delete</button>
+                                    <a href="/admin/edit/<?= $v['id'] ?>" class="btn btn-primary btn-sm">Edit</a>
+                                    <button id="delete-btn" class="btn btn-outline-primary btn-sm" data-href="/admin/destroy/<?= $v['id'] ?>">Delete</button>
+                                    <form action="" method="POST" id="delete-form">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                    </form>
                                 </div>
                             </td>
                         </tr>
@@ -47,4 +50,21 @@ News Portal | Admin
     </div>
 </section>
 
+<?= $this->endSection() ?>
+
+<?= $this->section('script') ?>
+<script>
+    $(document).ready(function() {
+        $('button#delete-btn').each(function(e) {
+            $(this).click(function() {
+                let href = $(this).data('href')
+                if(window.confirm('Apakah Anda Ingin Menghapus Data Ini')) {
+                    $('#delete-form').attr('action', href).submit()
+                } else {
+                    window.location.href = '/admin/index'
+                }
+            })
+        })
+    })
+</script>
 <?= $this->endSection() ?>
