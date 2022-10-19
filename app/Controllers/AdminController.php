@@ -56,7 +56,7 @@ class AdminController extends BaseController
                 'author' => $this->request->getVar('author'),
                 'body' => $this->request->getVar('body'),
             ])->update();
-            return $update ? redirect()->to(base_url('/admin/index'))->with('success', 'Data Berhasil Dirubah') : redirect()->back()->with('errors', 'Data Gagal Dirubah');
+            return $update ? redirect()->to(base_url('/admin/index'))->with('success', 'Data Berhasil Dirubah') : redirect()->back()->with('errors', 'Terdapat Kesalahan Dalam Sistem');
         }
         session()->setFlashdata('errors', 'Karakter Tidak Boleh Kurang dari 50');
         return redirect()->back();
